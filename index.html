@@ -1,0 +1,64 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/spawn.css">
+</head>
+
+<body>
+    <div class="spawn-container">
+        <div id="spawn-1" class="spawn"><img class="left" src="images/left.png"><img src="images/spawn-1.png"></div>
+        <div id="spawn-2" class="spawn"><img class="left" src="images/left.png"><img src="images/spawn-2.png"></div>
+        <div id="spawn-3" class="spawn"><img class="left" src="images/left.png"><img src="images/spawn-3.png"></div>
+        <div id="spawn-4" class="spawn"><img class="left" src="images/left.png"><img src="images/spawn-4.png"></div>
+    </div>
+    <div style="display:none; bottom: 10px; position: absolute; left: 50%; transform: translateX(-50%); text-align: center; margin-bottom: 15px; color: white;" id="error"></div>
+    <script>
+        let spawn1 = document.getElementById('spawn-1');
+        let spawn2 = document.getElementById('spawn-2');
+        let spawn3 = document.getElementById('spawn-3');
+        let spawn4 = document.getElementById('spawn-4');
+        spawn1.addEventListener('click', function () {
+            cef.emit('pwd:spawn', 1);
+        });
+        spawn2.addEventListener('click', function () {
+            cef.emit('pwd:spawn', 2);
+        });
+        spawn3.addEventListener('click', function () {
+            cef.emit('pwd:spawn', 3);
+        });
+        spawn4.addEventListener('click', function () {
+            cef.emit('pwd:spawn', 4);
+        });
+
+        function showError(message) {
+            const errorBlock = document.getElementById('error');
+            errorBlock.innerText = message;
+            errorBlock.style.display = 'block';
+            errorBlock.style.textAlign = 'center';
+        }
+        cef.on('error:msg3', (response) => {
+            switch(response)
+            {
+                case 1:
+                    {
+                        showError("გთხოვთ აირჩიოთ სხვა ვარიანტი!");   
+                        break;         
+                    }
+                case 2:
+                    {
+                        showError("თქვენ არ ფლობთ სახლს და არ ქირაობთ ოთახს/სასტუმროს ნომერს!"); 
+                        break;                    
+                    }
+                default:
+                    {
+                        showError("თქვენ არ გაცვიათ ფრაქციის ფორმა ან არ ხართ არცერთ ორგანიზაციაში");  
+                        break;                   
+                    } 
+            } 
+        }); 
+    </script>
+
+
+
+
+</body></html>
